@@ -1,0 +1,35 @@
+{
+    "name": "larva/larva-client",
+    "description": "This is a Larva client.",
+    "keywords": [
+        "laravel",
+        "client",
+        "larva"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "ext-json": "*",
+        "illuminate/support": "^5.0",
+        "larva/supports": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Larva\\Client\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Larva\\Client\\LarvaServiceProvider"
+            ],
+            "aliases": {
+                "Sms": "Larva\\Client\\Larva"
+            }
+        }
+    },
+    "prefer-stable": true
+}

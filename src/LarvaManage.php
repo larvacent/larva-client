@@ -49,6 +49,11 @@ class LarvaManage extends BaseObject
     public $endpoint = '';
 
     /**
+     * @var string
+     */
+    public $personal_access_token;
+
+    /**
      * 获取基础路径
      * @return string
      */
@@ -84,6 +89,19 @@ class LarvaManage extends BaseObject
      * @return string
      */
     public function getAccessToken()
+    {
+        if (empty($this->personal_access_token)) {
+            return $this->personal_access_token;
+        } else {
+            return $this->getClientAccessToken();
+        }
+    }
+
+    /**
+     * 获取客户端授权令牌
+     * @return string
+     */
+    public function getClientAccessToken()
     {
         if (($accessInfo = Cache::get(__METHOD__)) == null) {
             $http = new Client([

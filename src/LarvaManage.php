@@ -25,7 +25,6 @@ class LarvaManage extends BaseObject
         get as public;
         postJSON as public;
         postXML as public;
-        request as public;
     }
 
     /**

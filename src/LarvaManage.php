@@ -135,4 +135,18 @@ class LarvaManage extends BaseObject
         $stack->push($middleware);
         return $stack;
     }
+
+    /**
+     * Make a http request.
+     *
+     * @param string $method
+     * @param string $endpoint
+     * @param array $options http://docs.guzzlephp.org/en/latest/request-options.html
+     * @return mixed
+     */
+    public function request($method, $endpoint, $options = [])
+    {
+        $options['headers']['Accept'] = 'application/json';
+        return $this->unwrapResponse($this->getHttpClient()->{$method}($endpoint, $options));
+    }
 }

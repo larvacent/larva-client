@@ -7,7 +7,9 @@
 
 namespace Larva\Client;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
+use Illuminate\Support\Facades\Cache;
 use Larva\Supports\BaseObject;
 use Larva\Supports\Traits\HasHttpRequest;
 
@@ -27,14 +29,19 @@ class LarvaManage extends BaseObject
     }
 
     /**
-     * @var string 令牌
-     */
-    public $access_token;
-
-    /**
      * @var float
      */
     public $timeout = 5.0;
+
+    /**
+     * @var string
+     */
+    public $client_id;
+
+    /**
+     * @var string
+     */
+    public $client_secret;
 
     /**
      * @var string
@@ -73,16 +80,29 @@ class LarvaManage extends BaseObject
     }
 
     /**
-     * 获取 access_token
+     * 获取客户端授权令牌
      * @return string
      */
-    protected function getAccessToken()
+    public function getAccessToken()
     {
-        if (!$this->access_token) {
-            $res = $this->post('oauth/personal-access-tokens', ['name' => 'Larva Client']);
-
+        if (($accessInfo = Cache::get(__METHOD__)) == null) {
+            $http = new Client([
+                'base_uri' => $this->getBaseUri(),
+                'timeout' => $this->timeout,
+            ]);
+            $response = $http->post('/oauth/token', [
+                'form_params' => [
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $this->client_id,
+                    'client_secret' => $this->client_secret,
+                    'scope' => '',
+                ],
+            ]);
+            $accessInfo = json_decode((string)$response->getBody(), true);
+            $accessInfo['expires_in'] = now()->addMinutes($accessInfo['expires_in'] / 60 - 600);
+            Cache::set(__METHOD__, $accessInfo, $accessInfo['expires_in']);
         }
-        return $this->access_token;
+        return $accessInfo['access_token'];
     }
 
     /**
@@ -92,7 +112,7 @@ class LarvaManage extends BaseObject
     {
         $stack = HandlerStack::create();
         $middleware = new LarvaStack([
-            'access_token' => $this->access_token,
+            'access_token' => $this->getAccessToken(),
         ]);
         $stack->push($middleware);
         return $stack;

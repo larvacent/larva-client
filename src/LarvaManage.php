@@ -89,7 +89,7 @@ class LarvaManage extends BaseObject
      */
     public function getAccessToken()
     {
-        if (empty($this->personal_access_token)) {
+        if (!empty($this->personal_access_token)) {
             return $this->personal_access_token;
         } else {
             return $this->getClientAccessToken();

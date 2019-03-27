@@ -111,6 +111,7 @@ class LarvaManage extends BaseObject
             $http = new Client([
                 'base_uri' => $this->getBaseUri(),
                 'timeout' => $this->timeout,
+                'http_errors' => false,
             ]);
             $response = $http->post('/oauth/token', [
                 'form_params' => [

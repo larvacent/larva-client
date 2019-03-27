@@ -120,6 +120,9 @@ class LarvaManage extends BaseObject
                     'client_secret' => $this->client_secret,
                     'scope' => $this->scope,
                 ],
+                'headers' => [
+                    'Accept' => 'application/json'
+                ]
             ]);
             $accessInfo = json_decode((string)$response->getBody(), true);
             $expiresAt = now()->addSeconds($accessInfo['expires_in'])->addSeconds(-600);

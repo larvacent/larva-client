@@ -116,8 +116,8 @@ class LarvaManage extends BaseObject
                 ],
             ]);
             $accessInfo = json_decode((string)$response->getBody(), true);
-            $accessInfo['expires_in'] = now()->addMinutes($accessInfo['expires_in'] / 60 - 600);
-            Cache::set(__METHOD__, $accessInfo, $accessInfo['expires_in']);
+            $expiresAt = now()->addSeconds($accessInfo['expires_in'])->addSeconds(-600);
+            Cache::set(__METHOD__, $accessInfo, $expiresAt);
         }
         return $accessInfo['access_token'];
     }

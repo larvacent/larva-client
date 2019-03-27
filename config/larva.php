@@ -5,5 +5,7 @@ return [
     'client_secret' => env('LARVA_CLIENT_SECRET', 'your-larva-client-secret'),
     'scope' => '',
     'timeout' => 5.0,
-    'httpOptions' => [],
+    'httpOptions' => [
+        'http_errors' => false,
+    ],
 ];

@@ -50,6 +50,11 @@ class LarvaManage extends BaseObject
     /**
      * @var string
      */
+    public $scope = '';
+
+    /**
+     * @var string
+     */
     public $personal_access_token;
 
     /**
@@ -112,7 +117,7 @@ class LarvaManage extends BaseObject
                     'grant_type' => 'client_credentials',
                     'client_id' => $this->client_id,
                     'client_secret' => $this->client_secret,
-                    'scope' => '',
+                    'scope' => $this->scope,
                 ],
             ]);
             $accessInfo = json_decode((string)$response->getBody(), true);

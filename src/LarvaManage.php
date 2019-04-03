@@ -145,6 +145,23 @@ class LarvaManage extends BaseObject
     }
 
     /**
+     * 获取签名，用于浏览器端请求
+     * @param array $params
+     * @return array
+     */
+    public function getSignature(array $params)
+    {
+        $params['app_id'] = $this->client_id;
+        $params['timestamp'] = time();
+        $params['signature_method'] = 'HMAC-SHA1';
+        $params['signature_nonce'] = uniqid();
+        ksort($params);
+        $stringToSign = urlencode(http_build_query($params, null, '&', PHP_QUERY_RFC3986));
+        $params['signature'] = base64_encode(hash_hmac('sha1', $stringToSign, $this->client_secret, true));
+        return $params;
+    }
+
+    /**
      * Make a http request.
      *
      * @param string $method

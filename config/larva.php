@@ -6,6 +6,7 @@ return [
     'scope' => '',
     'timeout' => 5.0,
     'httpOptions' => [
+        //屏蔽Http 错误
         'http_errors' => false,
     ],
 ];

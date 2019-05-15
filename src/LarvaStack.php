@@ -54,6 +54,6 @@ class LarvaStack
     private function onBefore(RequestInterface $request)
     {
         $token = 'Bearer ' . $this->config['access_token'];
-        return $request->withAddedHeader('Authorization', $token);
+        return $request->withAddedHeader('Authorization', $token)->withAddedHeader('Accept','application/json');
     }
 }

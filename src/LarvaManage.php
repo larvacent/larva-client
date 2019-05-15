@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use Illuminate\Support\Facades\Cache;
 use Larva\Supports\BaseObject;
+use Larva\Supports\HttpResponse;
 use Larva\Supports\Traits\HasHttpRequest;
 
 /**
@@ -171,7 +172,6 @@ class LarvaManage extends BaseObject
      */
     public function request($method, $endpoint, $options = [])
     {
-        $options['headers']['Accept'] = 'application/json';
-        return $this->unwrapResponse($this->getHttpClient()->{$method}($endpoint, $options));
+        return new HttpResponse($this->getHttpClient()->{$method}($endpoint, $options));
     }
 }

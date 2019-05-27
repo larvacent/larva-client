@@ -10,6 +10,7 @@ namespace Larva\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use Illuminate\Support\Facades\Cache;
+use Larva\Client\Services\User;
 use Larva\Supports\BaseObject;
 use Larva\Supports\Traits\HasHttpRequest;
 
@@ -159,6 +160,14 @@ class LarvaManage extends BaseObject
         $stringToSign = urlencode(http_build_query($params, null, '&', PHP_QUERY_RFC3986));
         $params['signature'] = base64_encode(hash_hmac('sha1', $stringToSign, $this->client_secret, true));
         return $params;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return new User($this);
     }
 
     /**

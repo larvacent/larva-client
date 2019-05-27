@@ -21,7 +21,10 @@ class LarvaStack
         'access_token' => '',
     ];
 
-
+    /**
+     * LarvaStack constructor.
+     * @param array|null $config
+     */
     public function __construct($config)
     {
         if (!empty($config)) {

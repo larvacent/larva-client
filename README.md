@@ -48,5 +48,3 @@ $response = Larva::get('api/oatuh/test');
 print_r($response);
 
 ```
-
-支持 Laravel 用户提供者，可作为集中式用户管理系统客户端使用。配套服务端 https://github.com/larvacent/laravel-skeleton

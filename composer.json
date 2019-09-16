@@ -10,8 +10,8 @@
     "license": "MIT",
     "require": {
         "ext-json": "*",
-        "illuminate/support": "^5.0",
-        "larva/supports": "^1.1"
+        "illuminate/support": "^5.0 || ^6.0",
+        "larva/supports": "^1.2"
     },
     "autoload": {
         "psr-4": {
